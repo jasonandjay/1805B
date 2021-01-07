@@ -41,8 +41,8 @@ const Header: React.FC<IProps> = (props) => {
     async function clickItem(e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>){
         if (e.target !== e.currentTarget){
             let text = (e.target as HTMLLIElement).innerText
-            let result = await axios.get(`/api?ie=utf-8&mod=1&isbd=1&isid=b36c512200191710&ie=utf-8&f=3&rsv_bp=1&tn=02003390_43_hao_pg&wd=${encodeURIComponent(text)}&oq=%25E5%2585%25AB%25E7%25BB%25B4&rsv_pq=b36c512200191710&rsv_t=a092taGt1hAueld%2ByWFg%2FkqBJ7IrcKysarjIwaP8gjoV6uE2gG47DX7tLtNgciSnLtYWG0shk9E%2F&rqlang=cn&rsv_enter=0&rsv_dl=ts_1&rsv_btype=t&rsv_sug3=2&rsv_sug1=4&rsv_sug7=100&rsv_sug2=1&prefixsug=%25E5%2585%25AB&rsp=1&inputT=2230370&rsv_sug4=2231192&bs=%E5%85%AB%E7%BB%B4&rsv_sid=undefined&_ss=1&clist=&hsug=&f4s=1&csor=10&_cr1=41947`)
-            debugger;
+            let result = await axios.get(`/api/s?ie=utf-8&mod=1&isbd=1&isid=b36c512200191710&ie=utf-8&f=3&rsv_bp=1&tn=02003390_43_hao_pg&wd=${encodeURIComponent(text)}&oq=%25E5%2585%25AB%25E7%25BB%25B4&rsv_pq=b36c512200191710&rsv_t=a092taGt1hAueld%2ByWFg%2FkqBJ7IrcKysarjIwaP8gjoV6uE2gG47DX7tLtNgciSnLtYWG0shk9E%2F&rqlang=cn&rsv_enter=0&rsv_dl=ts_1&rsv_btype=t&rsv_sug3=2&rsv_sug1=4&rsv_sug7=100&rsv_sug2=1&prefixsug=%25E5%2585%25AB&rsp=1&inputT=2230370&rsv_sug4=2231192&bs=%E5%85%AB%E7%BB%B4&rsv_sid=undefined&_ss=1&clist=&hsug=&f4s=1&csor=10&_cr1=41947`)
+            props.setContent(result.data);
         }
     }
 

@@ -1,21 +1,11 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 
 interface IProps{
-    setContent: React.Dispatch<React.SetStateAction<string>>
+    content: string
 }
 
-const Header: React.FC<IProps> = (props)=>{
-    let [text, setText] = useState<string>('')
-
-    function changeText(e: React.ChangeEvent<HTMLInputElement>){
-        setText(e.target.value);
-    }
-
-    return <div>
-        <section>
-            <input type="text" value={text} onChange={changeText}/>
-        </section>
-    </div>
+const Body: React.FC<IProps> = (props)=>{
+    return <div dangerouslySetInnerHTML={{__html: props.content}}></div>
 }
 
-export default Header;
+export default Body;

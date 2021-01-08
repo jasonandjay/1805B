@@ -1,0 +1,223 @@
+//宽高
+@mixin wh($width, $height) {
+    width: $width;
+    height: $height;
+    display: block;
+}
+
+//超出一行变成...
+@mixin ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: normal;
+}
+
+//超出$Line行变成...
+@mixin ellipsisLn($Line) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: $Line;
+}
+/* 清除浮动 */
+
+@mixin clearfix {
+    &:after {
+        clear: both;
+        content: '.';
+        display: block;
+        height: 0;
+        line-height: 0;
+        overflow: hidden;
+    }
+    *height: 1%;
+}
+/* 画三角形 */
+
+@mixin triangle($width:10px, $direction:top, $color:$bgBlueLight) {
+    border: $width solid transparent;
+    @if ($direction==top) {
+        // 上三角
+        border-bottom-color: $color;
+    }
+    @if ($direction==bottom) {
+        // 下三角
+        border-top-color: $color;
+    }
+    @if ($direction==left) {
+        // 左三角
+        border-right-color: $color;
+    }
+    @if ($direction==right) {
+        // 右三角
+        border-left-color: $color;
+    }
+}
+
+//弹性盒
+@mixin flex($direction:row) {
+    display: flex;
+    flex-direction: $direction;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin nextStep($bcolor:#C0C0C0, $fcolor:#fff, $w:6.96rem) {
+    display: block;
+    width: $w;
+    height: 0.7rem;
+    line-height: 0.7rem;
+    text-align: center;
+    margin: 0.27rem auto 0;
+    color: $fcolor;
+    border-radius: 0.35rem;
+    letter-spacing: 1px;
+    font-size: 0.3rem;
+}
+
+@mixin border1px($direction: 'bottom') {
+    position: relative;
+    @if $direction==top {
+        &::after {
+            content: '';
+            @include wh(200%, 1px);
+            transform-origin: left top;
+            transform: scale(0.5);
+            background: $border-color-base;
+            position: absolute;
+            top: 0px;
+            left: 0;
+        }
+    }
+    @else if $direction==bottom {
+        &::after {
+            content: '';
+            @include wh(200%, 1px);
+            transform-origin: left top;
+            transform: scale(0.5);
+            background: #ccc;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    }
+}
+
+@mixin arrow($direction, $size, $color) {
+    width: 0;
+    height: 0;
+    line-height: 0;
+    font-size: 0;
+    overflow: hidden;
+    border-width: $size;
+    cursor: pointer;
+    @if $direction==top {
+        border-style: dashed dashed solid dashed;
+        border-color: transparent transparent $color transparent;
+        border-top: none;
+    }
+    @else if $direction==bottom {
+        border-style: solid dashed dashed dashed;
+        border-color: $color transparent transparent transparent;
+        border-bottom: none;
+    }
+    @else if $direction==right {
+        border-style: dashed dashed dashed solid;
+        border-color: transparent transparent transparent $color;
+        border-right: none;
+    }
+    @else if $direction==left {
+        border-style: dashed solid dashed dashed;
+        border-color: transparent $color transparent transparent;
+        border-left: none;
+    }
+}
+
+@mixin bg-image($url) {
+    background-image: url($url + "@2x.png");
+    @media (-webkit-min-device-pixel-ratio: 3), (min-device-pixel-ratio: 3) {
+        background-image: url($url + "@3x.png");
+    }
+}
+
+// 扩展点击区域(多用于移动端)
+@mixin extend-click() {
+    position: relative;
+    &:before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: -10px;
+        right: -10px;
+        bottom: -10px;
+    }
+}
+
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+// 美化占位符 placeholder 样式
+@mixin beauty-placeholder($fz, $color: #999, $align: left) {
+    &:-moz-placeholder {
+        font-size: $fz;
+        color: $color;
+        text-align: $align;
+    }
+    &:-ms-input-placeholder {
+        font-size: $fz;
+        color: $color;
+        text-align: $align;
+    }
+    &::-webkit-input-placeholder {
+        font-size: $fz;
+        color: $color;
+        text-align: $align;
+    }
+}
+
+// 毛玻璃效果
+@mixin Mao($blur: 10px,$bg:#a89e40) {
+   position: relative;
+   z-index: 1;
+   overflow: hidden;
+   &::after{
+        content: '';
+        background: $bg;
+        position: absolute;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index:-1;
+        -webkit-filter: blur($blur);
+        -moz-filter: blur($blur);
+        -o-filter: blur($blur);
+        -ms-filter: blur($blur);
+        filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius='${blur}');
+        filter: blur($blur);
+        *zoom: 1;
+   }
+}
+
+// 滤镜: 将彩色照片显示为黑白照片、保留图片层次
+@mixin grayscale() {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+// flex
+@mixin flex ($direction: row, $justify-content: flex-start, $align-items: flex-start, $flex-wrap: nowrap) {
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $justify-content;
+    align-items: $align-items;
+    flex-wrap: $flex-wrap;
+}

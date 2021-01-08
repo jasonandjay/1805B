@@ -1,0 +1,10 @@
+@import './reset';
+
+// 设置rem
+html{
+    font-size: calc(100vw/750*100);
+}
+// 设置body的font-size
+body{
+    font-size: .32rem;
+}

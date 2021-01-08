@@ -12,3 +12,15 @@ export interface INavItem{
     id: string,
     name: string
 }
+
+export interface ICarouselItem{
+    image: string,
+    ranksId: string,
+    [key:string]: string
+}
+
+export interface IRankItem{
+    image: string,
+    name: string,
+    id: string
+}

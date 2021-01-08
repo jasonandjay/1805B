@@ -7,3 +7,8 @@ export interface IRouteItem{
     redirect?: string,
     children?: IRouteItem []
 }
+
+export interface INavItem{
+    id: string,
+    name: string
+}

@@ -1,0 +1,24 @@
+.navWrap{
+    width: 100%;
+    overflow-x: scroll;
+    padding-right: .25rem;
+    box-sizing: border-box;
+}
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: .38rem;
+    color: #6A6A6A;
+    li{
+        flex-shrink: 0;
+        padding: .15rem 0;
+        margin: 0 .25rem;
+        border-bottom: 1px solid transparent;
+    }
+}
+.nav .active{
+    color: #000;
+    font-weight: 600;
+    border-bottom: 1px solid #6D28D7;
+}

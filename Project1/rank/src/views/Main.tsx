@@ -9,7 +9,7 @@ interface IProps{
 const Mine: React.FC<IProps> = (props)=>{
     let location = useLocation();
     // return <p>{JSON.stringify(location)}</p>
-    return <div>
+    return <React.Fragment>
         <RouterView routes={props.routes}></RouterView>
         <footer>
             <NavLink to="/main/index">首页</NavLink>
@@ -17,7 +17,7 @@ const Mine: React.FC<IProps> = (props)=>{
             <NavLink to="/main/message">消息</NavLink>
             <NavLink to="/main/mine">我的</NavLink>
         </footer>
-    </div>
+    </React.Fragment>
 }
 
 export default Mine;

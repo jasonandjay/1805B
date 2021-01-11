@@ -24,3 +24,13 @@ export interface IRankItem{
     name: string,
     id: string
 }
+
+export interface IMessageItem{
+    messageType: string,
+    correlation: string,
+    unread: string,
+    sendDate: string,
+    id: string,
+    title: string,
+    url: string
+}

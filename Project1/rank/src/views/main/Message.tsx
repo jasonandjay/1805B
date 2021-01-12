@@ -26,6 +26,7 @@ const Mine: React.FC = ()=>{
         })
         scroll.on('pullingDown', ()=>{
             setPage(1);
+            getList();
         })
     }, []);
 
@@ -41,11 +42,13 @@ const Mine: React.FC = ()=>{
         let res = await getMessageList(page);
         getingList = false;
         scroll.finishPullDown();
-        setHasMore(res.data.pageNo < res.data.totalPage)
-        if (page === 1){
-            setList(res.data.dataList as IMessageItem[])
-        }else{
-            setList([...list, ...res.data.dataList]);
+        if(res){
+            setHasMore(res.data.pageNo < res.data.totalPage)
+            if (page === 1){
+                setList(res.data.dataList as IMessageItem[])
+            }else{
+                setList([...list, ...res.data.dataList]);
+            }
         }
     }
 

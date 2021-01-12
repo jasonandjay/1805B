@@ -14,7 +14,7 @@ class Mine{
     async getInfo(){
         let result = await getUserInfo();
         this.info = result.data;
-        debugger;
+        // debugger;
     }
 }
 

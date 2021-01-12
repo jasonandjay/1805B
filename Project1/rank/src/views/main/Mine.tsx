@@ -1,22 +1,24 @@
-import React, {useContext, useEffect} from 'react'
-import StoreContext from '../../context/StoreContext'
-import {useObserver} from 'mobx-react-lite'
+import React, { useEffect } from 'react'
+import { useObserver } from 'mobx-react-lite'
+import useStore from '../../context/useStore';
 
-const Mine: React.FC = ()=>{
-    let store = useContext(StoreContext);
+const Mine: React.FC = () => {
+    let { mine } = useStore();
 
-    useEffect(()=>{
+    useEffect(() => {
         let timer = setInterval(()=>{
-            store.mine.setInfo( +new Date())
-            console.log(store.mine.info);
+            mine.setInfo( +new Date())
+            console.log(mine.info);
         }, 1000);
         return ()=>{
             window.clearInterval(timer);
         }
     }, []);
 
-    // debugger;
-    return useObserver(()=><p>我的页面{JSON.stringify(store.mine)}</p>)
+    return useObserver(()=><div>
+        <p>我的页面{(mine.info)}</p>
+        <button onClick={() => mine.setInfo(+new Date())}>修改info</button>
+    </div>)
 }
 
 export default Mine;

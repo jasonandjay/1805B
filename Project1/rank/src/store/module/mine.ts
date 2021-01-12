@@ -6,7 +6,7 @@ class Mine{
 
     @action
     setInfo(info){
-       this.info = info;
+        this.info = info;
     }
 }
 

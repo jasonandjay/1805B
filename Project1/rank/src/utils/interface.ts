@@ -34,3 +34,14 @@ export interface IMessageItem{
     title: string,
     url: string
 }
+
+export interface IUserInfo{
+    mid: string,
+    nickname: string,
+    avatar: string
+}
+
+export interface IMobileInfo{
+    authCode: string,
+    mobile: string
+}

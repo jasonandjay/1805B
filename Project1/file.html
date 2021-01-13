@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文件上传</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <input type="file">
+
+    <script>
+        var ele = document.querySelector('input');
+        // ele.addEventListener('change', function(e){
+        //     // debugger;
+        //     let file = e.target.files[0];
+        //     let form = new FormData();
+
+        //     [...e.target.files].forEach(item=>{
+        //         form.append(item.name, item);
+        //     })
+        //     // form.append('file', file);
+        //     // http://123.206.55.50:11000/upload
+        //     axios.post('http://123.206.55.50:11000/upload', form);
+        // })
+
+        ele.addEventListener('change', function(e){
+            // debugger;
+            let file = e.target.files[0];
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function(result){
+                // console.log('this...', result);
+                axios({
+                    method: 'post',
+                    url: 'http://123.206.55.50:11000/upload_base64',
+                    data: {base64: this.result}
+                }).then(body=>{
+                    console.log('body...', body);
+                }).catch(e=>{
+                    console.log('e..', e);
+                })
+            }
+            // form.append('file', file);
+            // http://123.206.55.50:11000/upload
+            // axios.post('http://123.206.55.50:11000/upload', form);
+        })
+    </script>
+</body>
+</html>

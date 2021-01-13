@@ -1,5 +1,5 @@
 import {action, observable} from 'mobx'
-import {getUserInfo} from '../../services'
+import {getUserInfo, getAuthCode} from '../../services'
 
 class Mine{
     @observable
@@ -13,8 +13,17 @@ class Mine{
     @action 
     async getInfo(){
         let result = await getUserInfo();
-        this.info = result.data;
-        // debugger;
+        if (result){
+            this.info = result.data;
+        }
+    }
+
+    @action
+    async sendCode(phone: string){
+        let result = await getAuthCode(phone);
+        if (result){
+            debugger;
+        }
     }
 }
 

@@ -1,17 +1,20 @@
 // 引入一级路由
 import Login from '../views/Login'
 import Main from '../views/Main'
+import Search from '../views/Search';
 
 // 引入二级路由
 import Index from '../views/main/Index'
 import Classify from '../views/main/Classify'
 import Message from '../views/main/Message'
 import Mine from '../views/main/Mine'
-import { Redirect } from 'react-router-dom';
 
 const routes = [{
     path: '/login',
     component: Login
+}, {
+    path: '/search',
+    component: Search
 }, {
     path: '/main',
     component: Main,

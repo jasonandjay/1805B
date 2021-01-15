@@ -1,4 +1,4 @@
-import { RouteComponentProps } from "react-router-dom";
+// import { RouteComponentProps } from react-router-dom;
 
 export interface IRouteItem{
     path: string,
@@ -44,4 +44,24 @@ export interface IUserInfo{
 export interface IMobileInfo{
     authCode: string,
     mobile: string
+}
+
+export interface ISearchRankItem{
+    image: string,
+    name: string,
+    id: string
+}
+
+export interface ISearchArticleItem{
+    image: string,
+    score: number,
+    articleType: string,
+    nickname: string,
+    official: string,
+    stick: string,
+    id: string,
+    avatar: string,
+    tag: string,
+    title: string
+    url: string
 }

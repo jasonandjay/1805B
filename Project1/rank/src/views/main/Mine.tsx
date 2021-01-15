@@ -22,9 +22,9 @@ const Mine: React.FC = () => {
         console.log('phone...', phone);
         if (/\d{11}/.test(phone)){
            let result = await mine.sendCode(phone);
-           if (result){
+        //    if (result){
                
-           }
+        //    }
         }
     }
 

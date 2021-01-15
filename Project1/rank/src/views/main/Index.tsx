@@ -3,6 +3,7 @@ import React, { useEffect, useState, useRef  } from 'react'
 import { getIndexNav, getCarouselList, getRankList } from '../../services/index'
 import { INavItem, ICarouselItem, IRankItem } from '../../utils/interface';
 import styles from './Index.module.scss'
+import {useHistory} from 'react-router-dom'
 
 console.log('styles...', styles);
 
@@ -12,6 +13,7 @@ const Mine: React.FC = () => {
     let [carouseList, setcarouseList] = useState<ICarouselItem[]>([]);
     let [rankList, setRankList] = useState<IRankItem[]>([]);
     let wrap = useRef();
+    let history = useHistory();
 
     useEffect(() => {
         getIndexNav().then(res => {
@@ -50,6 +52,8 @@ const Mine: React.FC = () => {
 
     // let location = useLocation();
     return <div>
+        {/* 搜索框 */}
+        <p onClick={()=>history.push('/search')}>点击搜索</p>
         {/* 顶部导航 */}
         <section className={styles.navWrap} ref={wrap}>
             <ul onClick={clickNav} className={styles.nav}>{

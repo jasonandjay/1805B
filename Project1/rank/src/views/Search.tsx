@@ -1,10 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, memo, useMemo, useCallback } from 'react';
 import useStore from '../context/useStore';
 import { useObserver } from 'mobx-react-lite';
+import SearchTip from '../components/SearchTip';
+import useThrottle from '../hooks/useThrotte';
 
+const WrapSearchTip = memo(SearchTip);
 const Search: React.FC = () => {
     let { search } = useStore();
     let [searchText, setSearchText] = useState<string>('');
+    let [count, setCount] = useState<string>('');
+
+    // useEffect(()=>{
+    //     setInterval(()=>{
+    //         setCount(count=>count+1)
+    //     }, 3000)
+    // }, []);
 
     useEffect(() => {
         search.getHotList();
@@ -14,9 +24,10 @@ const Search: React.FC = () => {
         search.getHistoryList();
     }, [])
 
+    let searchTip = useThrottle(search.getSearchTips)
     useEffect(() => {
         // 获取搜索关键词提示
-        search.getSearchTips(searchText);
+        searchTip(searchText);
     }, [searchText])
 
     function getSearchResult(){
@@ -24,6 +35,11 @@ const Search: React.FC = () => {
     }
     console.log('search...', search);
 
+    // useMemo包裹属性，当deps修改的时候recompute
+    let wrapObj = useMemo(()=>{return {}}, []);
+    let wrapCb = useCallback(()=>{
+        return ()=>{}
+    }, []);
     return useObserver(() => <div>
         {/* 搜索框 */}
         <section>
@@ -43,6 +59,7 @@ const Search: React.FC = () => {
             search.searchTipList.map(item => {
                 return <p key={item}>{item}</p>
             })}</section>
+        <WrapSearchTip list={search.searchTipList} obj={wrapObj} cb={wrapCb}/>
         {/* 历史搜索 */}
         <section></section>
         {/* 热门推荐 */}

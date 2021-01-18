@@ -2,6 +2,9 @@
 import Login from '../views/Login'
 import Main from '../views/Main'
 import Search from '../views/Search';
+import RankDetail from '../views/RankDetail';
+import ArticleDetail from '../views/ArticleDetail';
+
 
 // 引入二级路由
 import Index from '../views/main/Index'
@@ -15,6 +18,12 @@ const routes = [{
 }, {
     path: '/search',
     component: Search
+}, {
+    path: '/rankDetail',
+    component: RankDetail
+}, {
+    path: '/articleDetail',
+    component: ArticleDetail
 }, {
     path: '/main',
     component: Main,

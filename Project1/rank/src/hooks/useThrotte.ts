@@ -1,13 +1,13 @@
 import React from 'react'
 
-const useThrottle =  <T>(fn: (T)=>void, delay=500)=>{
-    let start = +new Date();
-    return React.useCallback((T)=>function(){
+function useThrottle<CallbackArguments extends any[]>(fn: (...args: CallbackArguments)=>void, delay = 500){
+    let start = React.useRef(+new Date());
+    return React.useCallback(function(...args: CallbackArguments){
         let now = +new Date();
-        console.log('now...', now);
-        if (now - start > delay){
-            fn(T);
-            start = now;
+        console.log('now...', now, now - start.current);
+        if (now - start.current > delay){
+            fn(...args);
+            start.current = now;
         }
     }, [])
 }

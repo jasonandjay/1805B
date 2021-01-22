@@ -2,6 +2,7 @@
   "name": "rank",
   "version": "0.1.0",
   "private": true,
+  "homepage": "/1805B/chenmanjie",
   "dependencies": {
     "@better-scroll/core": "^2.1.1",
     "@better-scroll/pull-down": "^2.1.1",

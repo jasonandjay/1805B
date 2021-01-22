@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -9,12 +9,19 @@ import store from './store/index';
 import StoreContext from './context/StoreContext';
 // 引入mockjs
 // import './mock/index'
+// 引入路由
+import { HashRouter as Router } from 'react-router-dom'
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <StoreContext.Provider value={store}>
-      <App />
-    </StoreContext.Provider>
+     <Suspense fallback={<div>Loading...</div>}>
+      <StoreContext.Provider value={store}>
+        <Router>
+          <App />
+        </Router>
+      </StoreContext.Provider>
+     </Suspense>
   </React.StrictMode>,
   document.getElementById('root')
 );

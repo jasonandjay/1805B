@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jsonp的实现</title>
+</head>
+<body>
+    <script>
+        var index = 0;
+        function Jsonp(url, cb){
+            let ele = document.createElement('script');
+            let cbName = `callback${index++}`;
+            window[cbName] = function(res){
+                cb(res);
+            }
+            ele.src = url += `&cb=${cbName}`;
+            document.body.appendChild(ele);
+        }
+        const url = `https://www.baidu.com/sugrec?pre=1&p=3&ie=utf-8&json=1&prod=pc&from=pc_web&wd=jsonp&req=2&bs=jsonp&csor=5`
+        Jsonp(url, res=>{
+            console.log('res...', res);
+        })
+    </script>
+</body>
+</html>

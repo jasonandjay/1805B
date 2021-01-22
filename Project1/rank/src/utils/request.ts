@@ -12,7 +12,11 @@ const erros = {
 }
 
 const instance = axios.create({
-    // baseURL: 'http://47.92.71.239/',
+    // baseURL: window.location.host==='123.206.55.50'?'http://rank.jasonandjay.com':'http://47.92.71.239',
+    // 通过host动态判断baseURL
+    // baseURL: window.location.host==='123.206.55.50'?'http://rank.jasonandjay.com':'',
+    // 通过环境变量动态判断baseURL, process.env.NODE_ENV
+    baseURL: process.env.NODE_ENV==='production'?'http://rank.jasonandjay.com':'',
     timeout: 30000
 });
 

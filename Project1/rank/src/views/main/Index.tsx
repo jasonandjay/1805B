@@ -5,7 +5,8 @@ import { INavItem, ICarouselItem, IRankItem } from '../../utils/interface';
 import styles from './Index.module.scss'
 import {useHistory} from 'react-router-dom'
 
-console.log('styles...', styles);
+import LazyLoad from '../../utils/lazyLoad'
+
 
 const Mine: React.FC = () => {
     let [list, setList] = useState<INavItem[]>([]);
@@ -29,6 +30,12 @@ const Mine: React.FC = () => {
         })
     }, []);
 
+    useEffect(()=>{
+        if (carouseList.length && rankList.length){
+            new LazyLoad();
+        }
+    }, [carouseList, rankList])
+
     function clickNav(e: React.MouseEvent) {
         if (e.target !== e.currentTarget) {
             let ele = e.target as HTMLElement;
@@ -51,7 +58,7 @@ const Mine: React.FC = () => {
     }
 
     // let location = useLocation();
-    return <div>
+    return <div className={styles.wrap}>
         {/* 搜索框 */}
         <p onClick={()=>history.push('/search')}>点击搜索</p>
         {/* 顶部导航 */}
@@ -66,14 +73,14 @@ const Mine: React.FC = () => {
         {/* 当前分类轮播 */}
         <section>{
             carouseList.map(item => {
-                return <img src={item.image} key={item.ranksId} alt="" />
+                return <img data-src={item.image} key={item.ranksId} alt="" />
             })
         }</section>
         {/* 当前分类 */}
         <section>{
             rankList.map(item => {
                 return <li key={item.id}>
-                    <img src={item.image} alt="" />
+                    <img data-src={item.image} alt="" />
                     <span>{item.name}</span>
                 </li>
             })}</section>

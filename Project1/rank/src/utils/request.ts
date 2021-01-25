@@ -16,7 +16,7 @@ const instance = axios.create({
     // 通过host动态判断baseURL
     // baseURL: window.location.host==='123.206.55.50'?'http://rank.jasonandjay.com':'',
     // 通过环境变量动态判断baseURL, process.env.NODE_ENV
-    baseURL: process.env.NODE_ENV==='production'?'http://rank.jasonandjay.com':'',
+    baseURL: process.env.NODE_ENV==='production'?'//rank.jasonandjay.com':'',
     timeout: 30000
 });
 

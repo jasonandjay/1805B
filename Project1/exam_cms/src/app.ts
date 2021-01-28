@@ -1,5 +1,7 @@
 import { RequestConfig } from 'umi';
+import { createLogger } from 'redux-logger';
 import {message} from 'antd'
+import {getToken} from '@/utils'
 
 export const request: RequestConfig = {
   timeout: 1000,
@@ -8,8 +10,7 @@ export const request: RequestConfig = {
   requestInterceptors: [(url, options) => {
     // const baseURL = 'http://127.0.0.1:7002';
     const baseURL = 'http://123.206.55.50:7002';
-    const authorization = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduVGltZSI6MTYxMTczNTE2MDMyMSwidXNlcl9pZCI6Inc2bDZuLWNidmw2cyIsInVzZXJfbmFtZSI6ImNoZW5tYW5qaWUiLCJpZGVudGl0eV9pZCI6IjYzbm85cC04eTBrNCIsImlkZW50aXR5X3RleHQiOiLnrqHnkIblkZgiLCJpYXQiOjE2MTE3MzUxNjB9.Yi6v3vfS5A3P_rmsSG_txy0A4Umvj3crZgm_I4AOOf8';
-    console.log('options...', options);
+    let authorization = getToken() as string;
     return {
       url: `${baseURL+url}`,
       options: { ...options, interceptors: true, headers: {...options.headers, authorization} },
@@ -28,4 +29,14 @@ export const request: RequestConfig = {
     }
     return response;
   }],
+};
+
+
+export const dva = {
+  config: {
+    onAction: createLogger(),
+    onError(e: Error) {
+      message.error(e.message, 3);
+    },
+  },
 };

@@ -5,14 +5,19 @@ const LoginPage:React.FC = ()=>{
   let [user_name, setUserName] = useState('chenmanjie')
   let [user_pwd, setUserPwd] = useState('Chenmanjie123!')
 
+  // 通过useSelector拿到redux中的数据
+  const {isLogin} = useSelector(models=>models.user);
+  // 通过useDispatch拿到派发redux的dispatch
   const dispatch  = useDispatch();
   const history = useHistory();
   let {query: {redirect}} = useLocation() as any;
-  const {isLogin} = useSelector(models=>models.user);
+
 
   useEffect(()=>{
-    redirect = redirect?decodeURIComponent(redirect): '/';
-    history.replace(redirect)
+    if (isLogin){
+      redirect = redirect?decodeURIComponent(redirect): '/';
+      history.replace(redirect)
+    }
   }, [isLogin]);
 
   useEffect(()=>{

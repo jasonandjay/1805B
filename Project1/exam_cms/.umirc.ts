@@ -12,5 +12,8 @@ export default defineConfig({
   antd: {
     dark: false
     // compact: false
+  },
+  dva: {
+    immer: true,
   }
 });

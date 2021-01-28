@@ -16,6 +16,7 @@ export const request: RequestConfig = {
       options: { ...options, interceptors: true, headers: {...options.headers, authorization} },
     };
   }],
+
   responseInterceptors: [response => {
     const codeMaps:{[key:number]:string} = {
       401: '鉴权失败',

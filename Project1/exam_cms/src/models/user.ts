@@ -10,7 +10,6 @@ export interface IndexModelType {
   namespace: 'user';
   state: IndexModelState;
   effects: {
-    query: Effect;
     login: Effect;
   };
   reducers: {
@@ -28,8 +27,6 @@ const UserModel: IndexModelType = {
   },
   // 异步操作，理解为vuex中的action, async/await理解为generator函数的语法糖
   effects: {
-    *query({ payload }, { call, put }) {
-    },
     *login({payload}, {call, put}){
       let result = yield call(login, payload);
       if(result.token){
@@ -67,7 +64,7 @@ const UserModel: IndexModelType = {
         // 登录页重定向
         if (authorization){
           if (pathname === '/login'){
-            history.replace('/');
+            history.replace('/main');
           }
         }else{
           if (pathname !== '/login'){

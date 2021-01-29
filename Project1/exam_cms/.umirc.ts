@@ -1,6 +1,7 @@
 import { defineConfig } from 'umi';
 
 export default defineConfig({
+  title: 'title',
   nodeModulesTransform: {
     type: 'none',
   },
@@ -15,5 +16,12 @@ export default defineConfig({
   },
   dva: {
     immer: true,
-  }
+  },
+  locale: {
+    default: 'zh-CN',
+    antd: true,
+    title: true,
+    baseNavigator: true,
+    baseSeparator: '-',
+  },
 });

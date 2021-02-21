@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react'
-import {getQuestionType} from '@/services/index'
+import {useDispatch} from 'umi'
 
 const QuestionType: React.FC = ()=>{
+  // 通过useDispatch拿到派发redux的dispatch
+  const dispatch  = useDispatch();
+
   useEffect(()=>{
-    getQuestionType().then(res=>{
-      console.log('res...', res);
-    });
+    dispatch({
+      type: 'question/getQuestionType'
+    })
   }, []);
 
   return (

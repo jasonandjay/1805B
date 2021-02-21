@@ -1,16 +1,18 @@
-import { login } from '@/services';
+import { login, getUserInfo } from '@/services';
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
-import {setToken, getToken} from '@/utils/index';
+import { setToken, getToken } from '@/utils/index';
+let hasUserInfo = false;
 
 export interface IndexModelState {
   isLogin: boolean,
-  userInfo: {[key:string]:any}
+  userInfo: { [key: string]: any }
 }
 export interface IndexModelType {
   namespace: 'user';
   state: IndexModelState;
   effects: {
     login: Effect;
+    getUserInfo: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -27,14 +29,25 @@ const UserModel: IndexModelType = {
   },
   // 异步操作，理解为vuex中的action, async/await理解为generator函数的语法糖
   effects: {
-    *login({payload}, {call, put}){
+    *login({ payload }, { call, put }) {
       let result = yield call(login, payload);
-      if(result.token){
+      if (result.token) {
         setToken(result.token);
         // 存储token
         yield put({
           type: 'save',
-          payload: {isLogin: true}
+          payload: { isLogin: true }
+        })
+      }
+    },
+    *getUserInfo({ payload }, { call, put }) {
+      let result = yield call(getUserInfo);
+      if (result.data) {
+        hasUserInfo = true;
+        // 存储用户信息
+        yield put({
+          type: 'save',
+          payload: { userInfo: result.data }
         })
       }
     }
@@ -55,6 +68,7 @@ const UserModel: IndexModelType = {
   subscriptions: {
     setup({ dispatch, history }) {
       return history.listen(({ pathname }) => {
+        /* 登陆相关逻辑 */
         let authorization = getToken();
         // 首页重定向
         if (pathname === '/') {
@@ -62,14 +76,21 @@ const UserModel: IndexModelType = {
           return;
         }
         // 登录页重定向
-        if (authorization){
-          if (pathname === '/login'){
+        if (authorization) {
+          if (pathname === '/login') {
             history.replace('/main');
           }
-        }else{
-          if (pathname !== '/login'){
+        } else {
+          if (pathname !== '/login') {
             history.replace(`/login?redirect=${encodeURIComponent(pathname)}`);
           }
+        }
+
+        /* 获取用户信息相关逻辑 */
+        if (!hasUserInfo) {
+          dispatch({
+            type: 'getUserInfo'
+          })
         }
       });
     }

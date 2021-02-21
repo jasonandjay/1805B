@@ -8,3 +8,8 @@ export function login(data: ILogin){
     data
   });
 }
+
+// 获取用户信息接口
+export function getUserInfo(){
+  return request('/user/userInfo');
+}

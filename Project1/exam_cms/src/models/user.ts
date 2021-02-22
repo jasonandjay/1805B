@@ -87,7 +87,7 @@ const UserModel: IndexModelType = {
         }
 
         /* 获取用户信息相关逻辑 */
-        if (!hasUserInfo) {
+        if (!hasUserInfo && authorization) {
           dispatch({
             type: 'getUserInfo'
           })

@@ -1,3 +1,4 @@
+import { IQuestionForm } from '@/utils/interface';
 import { request } from 'umi';
 
 // 获取试题列表
@@ -13,4 +14,11 @@ export function getExamSubject(){
 // 获取所有考试类型
 export function getExamType(){
   return request('/exam/examType');
+}
+// 添加试题
+export function submitQuestion(data: IQuestionForm){
+  return request('/exam/questions', {
+    method: 'POST',
+    data
+  })
 }

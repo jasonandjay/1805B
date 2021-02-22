@@ -1,4 +1,4 @@
-import { getExamType, getExamSubject, getQuestionType } from '@/services';
+import { getExamType, getExamSubject, getQuestionType, submitQuestion } from '@/services';
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { IQuestionType, IExamType, ISubject } from '@/utils/interface'
 
@@ -14,6 +14,7 @@ export interface QuestionModelType {
     getQuestionType: Effect;
     getExamSubject: Effect;
     getExamType: Effect;
+    submitQuestion: Effect;
   };
   reducers: {
     save: Reducer<QuestionModelState>;
@@ -54,6 +55,10 @@ const QuestionModel: QuestionModelType = {
           payload: { examTypes: result.data }
         })
       }
+    },
+    *submitQuestion({payload}, {call, put}) {
+      let result = yield call(submitQuestion, payload);
+      return result;
     }
   },
   // 同步操作，理解为vuex中的mutation

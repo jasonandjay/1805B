@@ -10,6 +10,9 @@ const AddQuestion: React.FC = () => {
   const dispatch = useDispatch();
   const {questionTypes, subjects, examTypes, user_id} = useSelector(models=>{return {...models.question, ...models.user.userInfo}});
 
+  // 获取form实例
+  const [form] = Form.useForm();
+
   useEffect(() => {
     dispatch({
       type: 'question/getQuestionType'
@@ -21,6 +24,20 @@ const AddQuestion: React.FC = () => {
       type: 'question/getExamType'
     })
   }, []);
+
+  useEffect(()=>{
+    const values:{[key:string]:string} = {};
+    if (questionTypes.length){
+      values.questions_type_id = questionTypes[0].questions_type_id;
+    }
+    if (subjects.length){
+      values.subject_id = subjects[0].subject_id;
+    }
+    if (examTypes.length){
+      values.exam_id = examTypes[0].exam_id;
+    }
+    form.setFieldsValue(values)
+  }, [questionTypes, subjects, examTypes]);
 
   const inputLayout = {
     wrapperCol: {span: 12 }
@@ -38,16 +55,24 @@ const AddQuestion: React.FC = () => {
     });
     (result as unknown as Promise<{code: number, msg: string}>).then(res=>{
       if (res.code === 1){
-        message.success(res.msg)
+        message.success(res.msg);
       }else{
         message.error(res.msg);
       }
+      form.resetFields();
     })
   }
 
   return (
     <div>
-      <Form onFinish={onFinish}>
+      <Form onFinish={onFinish} form={form} initialValues={{
+        title: '',
+        questions_stem: '',
+        questions_answer: '',
+        exam_id: examTypes[0]?.exam_id,
+        questions_type_id: questionTypes[0]?.questions_type_id,
+        subject_id: subjects[0]?.subject_id
+      }}>
         <h3>题目信息</h3>
         <label htmlFor="">题干</label>
         <Form.Item
@@ -67,7 +92,6 @@ const AddQuestion: React.FC = () => {
         <label htmlFor="">请选择考试类型：</label>
         <Form.Item
           name="exam_id"
-          initialValue={examTypes[0]?.exam_id}
           {...editorLayout}
         >
           <Select>{
@@ -82,7 +106,7 @@ const AddQuestion: React.FC = () => {
           name="subject_id"
           {...editorLayout}
         >
-          <Select defaultValue={subjects[0]?.subject_id}>{
+          <Select>{
               (subjects as ISubject[]).map(item=>{
                 return <Option key={item.subject_id} value={item.subject_id}>{item.subject_text}</Option>
               })
@@ -94,7 +118,7 @@ const AddQuestion: React.FC = () => {
           name="questions_type_id"
           {...editorLayout}
         >
-          <Select defaultValue={questionTypes[0]?.questions_type_id}>{
+          <Select>{
               (questionTypes as IQuestionType[]).map(item=>{
                 return <Option key={item.questions_type_id} value={item.questions_type_id}>{item.questions_type_text}</Option>
               })

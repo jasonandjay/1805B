@@ -28,3 +28,22 @@ export interface IQuestionForm {
   questions_answer: string,
   title: string,
 }
+
+interface IMenuItem{
+  path: string,
+  name: string,
+  meta: {
+    title: string,
+    show: boolean,
+    view_id: string
+  }
+}
+export interface IMenu{
+  name: string,
+  meta: {
+    icon: any,
+    title: string,
+    show: boolean
+  },
+  children?: IMenuItem[]
+}

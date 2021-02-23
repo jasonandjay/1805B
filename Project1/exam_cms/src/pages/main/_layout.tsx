@@ -5,15 +5,16 @@ import { UserOutlined, LaptopOutlined, NotificationOutlined, DownOutlined } from
 import styles from './_layout.less';
 // import './_layout.less';
 // 引入国际化
-import { useIntl, getLocale, setLocale } from 'umi';
-
-
+import { useIntl, getLocale, setLocale, useSelector } from 'umi';
+import { IMenu } from '../../utils/interface';
 
 const { SubMenu } = Menu;
 const { Header, Content, Sider } = Layout;
 
 const MainLayout: React.FC = (props) => {
   const intl = useIntl();
+  const {userMenu}:{userMenu:IMenu[]} = useSelector(models=>models.user);
+
   const menu = (
     <Menu>
       <Menu.Item>
@@ -44,6 +45,10 @@ const MainLayout: React.FC = (props) => {
     }
   }
 
+  // 处理默认选中和展开菜单
+  let defaultOpenKeys = userMenu.length?[userMenu[0].name]: [];
+  let defaultSelectedKeys = userMenu.length?[userMenu[0].children![0].name]: [];
+  console.log('default...', defaultOpenKeys, defaultSelectedKeys);
   return (
     <Layout className="base-layout">
       <Header className="header">
@@ -64,21 +69,20 @@ const MainLayout: React.FC = (props) => {
           <Menu
             mode="inline"
             theme="dark"
-            defaultSelectedKeys={['21']}
-            defaultOpenKeys={['sub1', 'sub11']}
+            defaultOpenKeys={defaultOpenKeys}
+            defaultSelectedKeys={defaultSelectedKeys}
             style={{ height: '100%', borderRight: 0 }}
-          >
-            <SubMenu key="sub1" icon={<UserOutlined />} title={intl.formatMessage({id: 'menu.question'})}>
-              <Menu.Item key="1">
-                <Link to="/main/addQuestions">{intl.formatMessage({id: 'menu.question.addQuestion'})}</Link>
-              </Menu.Item>
-              <Menu.Item key="2">
-                <Link to="/main/questionTypes">{intl.formatMessage({id: 'menu.question.questionType'})}</Link>
-              </Menu.Item>
-              <Menu.Item key="3">
-                <Link to="/main/watchQuestions">{intl.formatMessage({id: 'menu.question.watchQuestion'})}</Link>
-              </Menu.Item>
-            </SubMenu>
+          >{
+            userMenu.map(item=>{
+              return <SubMenu key={item.name} icon={<item.meta.icon />} title={intl.formatMessage({id: item.name})}>{
+                item.children?.map(value=>{
+                  return value.meta.show?<Menu.Item key={value.name}>
+                    <Link to={value.path}>{intl.formatMessage({id: value.name})}</Link>
+                  </Menu.Item>:null
+                })
+              }</SubMenu>
+            })
+          }
           </Menu>
         </Sider>
         <Layout style={{ padding: '0 24px 24px' }}>

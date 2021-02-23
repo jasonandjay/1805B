@@ -1,11 +1,14 @@
-import { login, getUserInfo } from '@/services';
+import { login, getUserInfo, getViewAuthority } from '@/services';
 import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { setToken, getToken } from '@/utils/index';
+import menus from '@/utils/menu';
+import { IMenu } from '../utils/interface';
 let hasUserInfo = false;
 
 export interface IndexModelState {
   isLogin: boolean,
-  userInfo: { [key: string]: any }
+  userInfo: { [key: string]: any },
+  userMenu: IMenu[]
 }
 export interface IndexModelType {
   namespace: 'user';
@@ -13,6 +16,7 @@ export interface IndexModelType {
   effects: {
     login: Effect;
     getUserInfo: Effect;
+    getViewAuthority: Effect;
   };
   reducers: {
     save: Reducer<IndexModelState>;
@@ -25,7 +29,8 @@ const UserModel: IndexModelType = {
   namespace: 'user',
   state: {
     isLogin: false,
-    userInfo: {}
+    userInfo: {},
+    userMenu: []
   },
   // 异步操作，理解为vuex中的action, async/await理解为generator函数的语法糖
   effects: {
@@ -49,7 +54,33 @@ const UserModel: IndexModelType = {
           type: 'save',
           payload: { userInfo: result.data }
         })
+        // 获取用户视图数据
+        yield put({
+          type: 'getViewAuthority'
+        })
       }
+    },
+    *getViewAuthority({payload}, {call, put}) {
+      let result = yield call(getViewAuthority);
+      // 处理用户拥有的视图数据
+      let userMenu: IMenu[] = [];
+      if (result.data){
+        menus.forEach(item=>{
+          let children = item.children.filter(value=>{
+            return result.data.findIndex((view:any)=>{
+              return view.view_id === value.meta.view_id;
+            }) !== -1
+          })
+          if (children.length){
+            userMenu.push({...item, children});
+          }
+        })
+      }
+      // 获取用户视图数据
+      yield put({
+        type: 'save',
+        payload: { userMenu}
+      })
     }
   },
   // 同步操作，理解为vuex中的mutation

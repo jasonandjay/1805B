@@ -3,6 +3,7 @@ import { Effect, ImmerReducer, Reducer, Subscription } from 'umi';
 import { setToken, getToken } from '@/utils/index';
 import menus from '@/utils/menu';
 import { IMenu } from '../utils/interface';
+import { removeToken } from '../utils/index';
 let hasUserInfo = false;
 
 export interface IndexModelState {
@@ -15,6 +16,7 @@ export interface IndexModelType {
   state: IndexModelState;
   effects: {
     login: Effect;
+    logout: Effect;
     getUserInfo: Effect;
     getViewAuthority: Effect;
   };
@@ -44,6 +46,13 @@ const UserModel: IndexModelType = {
           payload: { isLogin: true }
         })
       }
+    },
+    *logout({ payload }, {call, put}) {
+      removeToken();
+      yield put({
+        type: 'save',
+        payload: { isLogin: false }
+      })
     },
     *getUserInfo({ payload }, { call, put }) {
       let result = yield call(getUserInfo);

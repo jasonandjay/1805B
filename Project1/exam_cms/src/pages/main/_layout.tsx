@@ -1,7 +1,6 @@
 import React from 'react'
-import {Link} from 'umi'
+import {Link, useDispatch, useHistory} from 'umi'
 import { Layout, Menu, Breadcrumb, Dropdown, Avatar, Image, Button } from 'antd';
-import { UserOutlined, LaptopOutlined, NotificationOutlined, DownOutlined } from '@ant-design/icons';
 import styles from './_layout.less';
 // import './_layout.less';
 // 引入国际化
@@ -14,6 +13,16 @@ const { Header, Content, Sider } = Layout;
 const MainLayout: React.FC = (props) => {
   const intl = useIntl();
   const {userMenu}:{userMenu:IMenu[]} = useSelector(models=>models.user);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  function logout(){
+    dispatch({
+      type: 'user/logout'
+    })
+    // 重定向到登陆页面
+    history.replace('/login');
+  }
 
   const menu = (
     <Menu>
@@ -32,7 +41,7 @@ const MainLayout: React.FC = (props) => {
           3rd menu item
         </a>
       </Menu.Item>
-      <Menu.Item danger>a danger item</Menu.Item>
+      <Menu.Item danger onClick={logout}>{intl.formatMessage({id: 'logout'})}</Menu.Item>
     </Menu>
   );
 
@@ -69,6 +78,7 @@ const MainLayout: React.FC = (props) => {
           <Menu
             mode="inline"
             theme="dark"
+            key={userMenu.length}
             defaultOpenKeys={defaultOpenKeys}
             defaultSelectedKeys={defaultSelectedKeys}
             style={{ height: '100%', borderRight: 0 }}

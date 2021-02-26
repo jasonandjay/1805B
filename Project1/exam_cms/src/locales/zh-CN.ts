@@ -1,4 +1,5 @@
 export default {
+  'logout': '退出登陆',
   'title': '考试管理平台',
   'menu.question': '试题管理',
   'menu.question.addQuestion': '添加试题',

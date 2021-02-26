@@ -1,4 +1,5 @@
 export default {
+  'logout': 'Logout',
   'title': 'Exam Manage System',
   'menu.question': 'Question Manage',
   'menu.question.addQuestion': 'Add Question',

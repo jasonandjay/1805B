@@ -54,6 +54,12 @@ const MainLayout: React.FC = (props) => {
     }
   }
 
+  function clickMenu(value: string){
+    console.log('window._hmt..', window._hmt, _hmt);
+    (window as any)._hmt.push(['_trackEvent', '导航菜单', 'click', '菜单名称', value]);
+    debugger
+  }
+
   // 处理默认选中和展开菜单
   let defaultOpenKeys = userMenu.length?[userMenu[0].name]: [];
   let defaultSelectedKeys = userMenu.length?[userMenu[0].children![0].name]: [];
@@ -86,7 +92,7 @@ const MainLayout: React.FC = (props) => {
             userMenu.map(item=>{
               return <SubMenu key={item.name} icon={<item.meta.icon />} title={intl.formatMessage({id: item.name})}>{
                 item.children?.map(value=>{
-                  return value.meta.show?<Menu.Item key={value.name}>
+                  return value.meta.show?<Menu.Item key={value.name} onClick={()=>clickMenu(value.name)}>
                     <Link to={value.path}>{intl.formatMessage({id: value.name})}</Link>
                   </Menu.Item>:null
                 })

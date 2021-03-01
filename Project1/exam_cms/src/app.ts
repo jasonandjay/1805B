@@ -9,7 +9,8 @@ export const request: RequestConfig = {
   middlewares: [],
   requestInterceptors: [(url, options) => {
     // const baseURL = 'http://127.0.0.1:7002';
-    const baseURL = 'http://123.206.55.50:7002';
+    // const baseURL = 'http://123.206.55.50:7002';
+    const baseURL = 'https://exam.jasonandjay.com';
     let authorization = getToken() as string;
     return {
       url: `${baseURL+url}`,

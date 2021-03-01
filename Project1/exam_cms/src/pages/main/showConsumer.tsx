@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { useDispatch, useSelector } from 'umi';
-import { Table, Avatar } from 'antd';
+import { Table, Avatar, Button } from 'antd';
+import XLSX from 'xlsx';
 
 const tables = [{
   title: '用户数据',
@@ -90,9 +91,70 @@ const ShowConsumer: React.FC = ()=>{
     }
   }, [select]);
 
+  function exportExcel(){
+    // 创建workbook
+    var wb = XLSX.utils.book_new();
+    var ws_data = [columns.map(item=>item.title), ...dataSource.map(item=>Object.values(item))];
+    console.log('ws_data...', ws_data);
+    // 创建worksheet
+    var ws = XLSX.utils.aoa_to_sheet(ws_data);
+    XLSX.utils.book_append_sheet(wb, ws, '预排课表');
+    debugger;
+    XLSX.writeFile(wb, 'project.xlsb');
+  }
+
+  function importExcel(e: React.ChangeEvent<HTMLInputElement>){
+    let file = (e.target as any).files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      var data = new Uint8Array((e.target as any).result);
+      var workbook = XLSX.read(data, {type: 'array'});
+      var worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      var data = XLSX.utils.sheet_to_json(worksheet);
+      console.log('data...', data);
+      // 渲染表格
+      setDataSource(data);
+      setColumns([{
+        title: '上课日期',
+        dataIndex: '上课日期'
+      }, {
+        title: '上课时间',
+        dataIndex: '上课时间'
+      }, {
+        title: '合班后人数',
+        dataIndex: '合班后人数'
+      }, {
+        title: '合班后班级名称',
+        dataIndex: '合班后班级名称'
+      }, {
+        title: '学院',
+        dataIndex: '学院'
+      }, {
+        title: '时间',
+        dataIndex: '时间'
+      }, {
+        title: '班级所属教研室',
+        dataIndex: '班级所属教研室'
+      }, {
+        title: '课程名称',
+        dataIndex: '课程名称'
+      }, {
+        title: '辅导员',
+        dataIndex: '辅导员'
+      }])
+      /* DO SOMETHING WITH workbook HERE */
+    };
+    reader.readAsArrayBuffer(file);
+  }
+
   return (
     <div>
       <h1>用户展示</h1>
+      <div>
+        <Button type="primary" onClick={exportExcel}>导出数据</Button>
+        <Button type="ghost">
+          <input type="file" onChange={importExcel}/> 导入数据</Button>
+      </div>
     <div>{
       tables.map((item, index)=>{
         return <span key={index} onClick={()=>setSelect(index)} className={index===select?'active':''}>{item.title}</span>

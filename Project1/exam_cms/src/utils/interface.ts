@@ -47,3 +47,4 @@ export interface IMenu{
   },
   children?: IMenuItem[]
 }
+

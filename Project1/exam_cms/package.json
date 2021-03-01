@@ -26,7 +26,8 @@
     "for-editor": "^0.3.5",
     "js-cookie": "^2.2.1",
     "redux-logger": "^3.0.6",
-    "umi": "^3.3.7"
+    "umi": "^3.3.7",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "@types/react": "^16.9.0",

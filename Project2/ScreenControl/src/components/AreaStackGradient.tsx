@@ -5,7 +5,10 @@ export default function AreaStackGradient(){
   let [key, setKey] = useState(0);
 
   useEffect(()=>{
+    // echart使用步骤
+    // 1. 初始化实例
     let myChart = echarts.init(document.querySelector('#container') as HTMLElement);
+    // 2. 配置echart参数
     const options =  {
       color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
       title: {
@@ -173,13 +176,9 @@ export default function AreaStackGradient(){
           }
       ]
     };
+    // 3. 调用setOption修改echart
     myChart.setOption(options);
-  }, [key]);
+  }, []);
 
-  useEffect(()=>{
-    window.addEventListener('resize', (e)=>{
-      setKey(window.innerWidth+window.innerHeight);
-    });
-  }, [])
   return <div key={key} id="container" style={{width: '100%', height: '100%'}}>area stack gradient</div>
 }

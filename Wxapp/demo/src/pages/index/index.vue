@@ -1,50 +1,43 @@
 <template>
-	<view class="content">
-		<image class="logo" src="/static/logo.png"></image>
-		<view>
-			<text class="title">{{title}}</text>
-		</view>
-		<a url="/pages/index/detail">跳转详情</a>
-	</view>
+  <div>
+    <swiper
+      indicator-dots="true"
+      indicator-color="#C6226A"
+      indicator-active-color="#EA2D80"
+      autoplay="true"
+	  circular="true"
+    >
+      <block v-for="item in carousel" :key="item.brandCode">
+        <swiper-item>
+          <img :src="item.brandImg" mode="widthFix"/>
+        </swiper-item>
+      </block>
+    </swiper>
+  </div>
 </template>
 
 <script>
-	export default {
-		data() {
-			return {
-				title: 'Hello'
-			}
-		},
-		onLoad() {
-
-		},
-		methods: {
-
-		}
-	}
+import { getCarousel } from "../../services/index";
+export default {
+  data() {
+    return {
+      carousel: [],
+    };
+  },
+  async created() {
+    let result = await getCarousel();
+    this.carousel = result;
+  },
+};
 </script>
 
-<style>
-	.content {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
+<style scoped>
+/*  记住：1rem = 100rpx 跟px的换算比例依赖屏幕宽度的变化 */
+	swiper{
+		width: 100%;
+		height: 490rpx;
 	}
-
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin: 200rpx auto 50rpx auto;
-	}
-
-	.text-area {
-		display: flex;
-		justify-content: center;
-	}
-
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+	img{
+		width: 100%;
 	}
 </style>

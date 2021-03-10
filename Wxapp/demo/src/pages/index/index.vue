@@ -9,7 +9,9 @@
     >
       <block v-for="item in carousel" :key="item.brandCode">
         <swiper-item>
-          <img :src="item.brandImg" mode="widthFix"/>
+          <!-- <img :src="item.brandImg" mode="widthFix" @click="clickBanner(item.brandUrl)"/> -->
+          <img :src="item.brandImg" mode="widthFix" @click="e=>clickBanner"/>
+          <img :src="item.brandImg" mode="widthFix" @click="e=>clickBanner(item.brandUrl)"/>
         </swiper-item>
       </block>
     </swiper>
@@ -23,6 +25,13 @@ export default {
     return {
       carousel: [],
     };
+  },
+  methods: {
+	clickBanner(brandUrl){
+		if (brandUrl){
+			wx.navigateTo({ url: brandUrl });
+		}
+	}
   },
   async created() {
     let result = await getCarousel();

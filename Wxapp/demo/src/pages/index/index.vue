@@ -19,14 +19,18 @@
 </template>
 
 <script>
-import { getCarousel } from "../../services/index";
+import {mapState, mapActions} from 'vuex';
+
 export default {
-  data() {
-    return {
-      carousel: [],
-    };
-  },
+  computed: {
+	...mapState({
+		carousel: state=>state.index.carousel
+	})
+  },	
   methods: {
+	...mapActions({
+		getCarousel: 'index/getCarousel'
+	}),
 	clickBanner(brandUrl){
 		if (brandUrl){
 			wx.navigateTo({ url: brandUrl });
@@ -34,8 +38,7 @@ export default {
 	}
   },
   async created() {
-    let result = await getCarousel();
-    this.carousel = result;
+    this.getCarousel();
   },
 };
 </script>

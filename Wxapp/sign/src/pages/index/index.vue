@@ -39,6 +39,11 @@ export default {
   },
   async created() {
     this.getCarousel();
+    // 判断是否做过生物识别
+    let hasAuth = wx.getStorageSync('auth');
+    if (!hasAuth){
+      wx.navigateTo({ url: '/pages/index/auth' });
+    }
   },
 };
 </script>

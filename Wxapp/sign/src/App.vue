@@ -16,6 +16,9 @@ export default {
       complete: () => {},
     });
   },
+  onUnload(){
+	  wx.clearStorageSync('auth');
+  }
 };
 </script>
 

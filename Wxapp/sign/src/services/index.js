@@ -9,3 +9,13 @@ export function login(code){
 export function decrypt(iv, encryptedData){
     return request.post('/user/decrypt', {iv, encryptedData})
 }
+
+// 获取面试列表
+export function getSignList(params){
+    return request.get('/sign')
+}
+
+// 获取面试详情
+export function getSignDetail(id){
+    return request.get(`/sign/${id}`)
+}

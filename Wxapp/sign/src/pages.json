@@ -13,14 +13,21 @@
 			"path": "pages/sign/search"
 		},{
 			"path": "pages/index/auth"
+		},{
+			"path": "pages/sign/list",
+			"style": {
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 50
+			}
 		}
 	],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "味可滋少女心小店",
+		"navigationBarTitleText": "一面而就",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
-	},
+	}
+	/*,
 	"tabBar": {
 		"color": "#B4B4B4",
 		"selectedColor": "#E93182",
@@ -30,27 +37,27 @@
 			{
 				"pagePath": "pages/index/index",
 				/*	"iconPath": "static/image/icon_component.png",
-			"selectedIconPath": "static/image/icon_component_HL.png", */
+			"selectedIconPath": "static/image/icon_component_HL.png", 
 				"text": "发现"
 			},
 			{
 				"pagePath": "pages/shop/index",
 				/*	"iconPath": "static/image/icon_API.png",
-			"selectedIconPath": "static/image/icon_API_HL.png", */
+			"selectedIconPath": "static/image/icon_API_HL.png", 
 				"text": "小店"
 			},
 			{
 				"pagePath": "pages/order/index",
 				/*	"iconPath": "static/image/icon_component.png",
-			"selectedIconPath": "static/image/icon_component_HL.png", */
+			"selectedIconPath": "static/image/icon_component_HL.png", 
 				"text": "点单"
 			},
 			{
 				"pagePath": "pages/my/index",
 				/*	"iconPath": "static/image/icon_API.png",
-			"selectedIconPath": "static/image/icon_API_HL.png", */
+			"selectedIconPath": "static/image/icon_API_HL.png", 
 				"text": "我的"
 			}
 		]
-	}
+	}*/
 }
